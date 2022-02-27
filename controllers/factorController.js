@@ -36,13 +36,25 @@ exports.getFactor = catchAsync(async (req, res, next) => {
     },
   });
 });
-const createFactor = async ({ ticketId, name, tedad, vahed, tozihat }) => {
+const createFactor = async ({
+  ticketId,
+  name,
+  tedad,
+  vahed,
+  gheymatVahed,
+  mablaghKol,
+  maliat,
+  jameKol,
+}) => {
   return await Factor.create({
     ticketId,
     name,
     tedad,
     vahed,
-    tozihat,
+    gheymatVahed,
+    mablaghKol,
+    maliat,
+    jameKol,
   });
 };
 
@@ -53,7 +65,10 @@ exports.createFactor = catchAsync(async (req, res, next) => {
       name: element.name,
       tedad: element.tedad,
       vahed: element.vahed,
-      tozihat: element.tozihat,
+      gheymatVahed: element.gheymatVahed,
+      mablaghKol: element.mablaghKol,
+      maliat: element.maliat,
+      jameKol: element.jameKol,
     });
   });
   res.status(201).json({

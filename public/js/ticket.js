@@ -555,10 +555,41 @@ class Ticket {
         ticketBox.appendChild(rejectFactor);
       }
     }
+    function generatePDF(htmlTag) {
+      var opt = {
+        //margin: 1,
+        filename: "factor.pdf",
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 1 },
+        jsPDF: { unit: "in", format: "letter", orientation: "landscape" },
+      };
 
+      // New Promise-based usage:
+      html2pdf().set(opt).from(htmlTag).save();
+      //html2pdf().from(htmlTag).save();
+    }
+    /////////////////
+    // async function generatePDF(htmlTag) {
+    //   //Downloading
+    //   var downloading = htmlTag;
+    //   var doc = new jsPDF("l", "pt");
+
+    //   await html2canvas(downloading, {
+    //     //allowTaint: true,
+    //     //useCORS: true,
+    //     // width: 1000,
+    //   }).then((canvas) => {
+    //     //Canvas (convert to PNG)
+    //     doc.addImage(canvas.toDataURL("image/png"), "PDF", 40, 40, 400, 200);
+    //   });
+
+    //   doc.save("Document.pdf");
+
+    //   //End of downloading
+    // }
+    /////////////////
     function showFactor() {
       const loadFactor = ticket.factors;
-
       loadFactor.forEach((factor) => {
         if (firsttime) {
           let factore = document.createElement("div");
@@ -675,11 +706,14 @@ class Ticket {
           fileds.appendChild(remBtn);
           let factore = document.querySelector(".factore");
           factore.appendChild(fileds);
-
           counter = counter + 1;
         }
       });
     }
+    document.querySelector("#test-btn").addEventListener("click", () => {
+      console.log(inputHtmlTag);
+      generatePDF(inputHtmlTag);
+    });
 
     if (ticket.status === "pending") {
       if (ticket.faultWorkerId == null) {
@@ -1299,6 +1333,7 @@ class Ticket {
         ticketBox.appendChild(ticketAnswer);
       }
     }
+    let inputHtmlTag;
 
     function adFactor() {
       if (firsttime) {
@@ -1425,6 +1460,7 @@ class Ticket {
         counter = counter + 1;
         document.querySelector("#add-factor").textContent = "افزودن کالا";
         firsttime = false;
+        inputHtmlTag = factore; //factor added
       } else {
         console.log(counter);
         let fileds = document.createElement("div");
